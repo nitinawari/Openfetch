@@ -1,48 +1,36 @@
-# 🌍 Openfetch
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
-> 🚀 Discover & contribute to open source. Find beginner-friendly issues, earn badges, explore internships, and grow as a developer.
+## Getting Started
 
----
-
-## 📌 Overview
-
-**Openfetch** is a platform that connects open source contributors and maintainers. Whether you're just starting out or you're an experienced dev, Openfetch helps you:
-
-- 🔍 Find projects to contribute to
-- 🪄 Explore beginner-friendly issues
-- 💼 Track open source internships (GSoC, LFX, Outreachy, etc.)
-- 🏅 Earn GitHub-friendly contributor badges
-- 💸 Discover bounties & paid contribution opportunities
-- 📊 Track your contribution journey & rank
-- 🧠 Attend hackathons & open source events
-- 🧩 Invite others and grow your contributor network
-
----
-
-## 🛠️ MVP Features
-
-- ✅ Project & issue listing
-- ✅ Contributor profiles
-- ✅ Filtering by language, category, difficulty
-- ✅ Badges (embeddable in GitHub)
-- ✅ Internship dashboard with stats (GSoC, LFX, etc.)
-- ✅ Maintainer dashboard to invite or hire contributors
-- ✅ Hackathon & event listing
-
----
-
-## 🚧 Tech Stack
-
-| Frontend | Backend | Database | Others |
-|---------|---------|----------|--------|
-| Next.js | Node.js / Express | PostgreSQL / MongoDB | Tailwind CSS, GitHub OAuth, Prisma
-
----
-
-## 📦 Installation (Local Setup)
+First, run the development server:
 
 ```bash
-git clone https://github.com/yourusername/openfetch.git
-cd Openfetch
-npm install
 npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
+```
+
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+
+This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+
+## Learn More
+
+To learn more about Next.js, take a look at the following resources:
+
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+
+## Deploy on Vercel
+
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.

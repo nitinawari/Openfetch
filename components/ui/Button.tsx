@@ -4,7 +4,6 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: "default";
   size?: "default";
-  className?: string;
 }
 
 export const Button = ({

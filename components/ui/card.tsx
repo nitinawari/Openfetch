@@ -7,7 +7,7 @@ interface CardProps {
 
 
 const Card = ({ children, className }: CardProps) => (
-    <div className={`rounded-xl shadow-xl bg-white ${className}`}>
+    <div className={`h-full rounded-xl w-1/2 shadow-xl bg-white ${className}`}>
         {children}
     </div>
 )

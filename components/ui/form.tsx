@@ -1,10 +1,10 @@
-// form.tsx
+"use client"
 import React, { createContext, useContext, useId } from 'react';
 import { Label } from './label';
-import { 
-  useFormContext, 
-  Controller, 
-  FormProvider, 
+import {
+  useFormContext,
+  Controller,
+  FormProvider,
   UseFormReturn,
   FieldValues,
   FieldPath,
@@ -24,14 +24,14 @@ interface FormProps<T extends FieldValues> extends Omit<React.FormHTMLAttributes
 }
 
 function Form<T extends FieldValues>({ // Form must receive object of key, value pair  , also ...porps menas all other field of form like action,classname, id 
-  form, 
-  children, 
+  form,
+  children,
   onSubmit,
-  ...props 
+  ...props
 }: FormProps<T>) {
   return (
     <FormProvider {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} {...props}>  
+      <form onSubmit={form.handleSubmit(onSubmit)} {...props}>
         {children}
       </form>
     </FormProvider>
@@ -71,9 +71,9 @@ interface FormFieldProps<T extends FieldValues> {
   children: React.ReactNode;
 }
 
-function FormField<T extends FieldValues>({ 
-  name, 
-  children 
+function FormField<T extends FieldValues>({
+  name,
+  children
 }: FormFieldProps<T>) {
   const { control, formState } = useFormContext<T>();
   const id = useId();
@@ -95,12 +95,12 @@ function FormField<T extends FieldValues>({
 }
 
 // Internal component that receives the field prop from Controller
-const FormFieldInner = ({ 
-  field, 
-  children 
-}: { 
-  field: any; 
-  children: React.ReactNode 
+const FormFieldInner = ({
+  field,
+  children
+}: {
+  field: any;
+  children: React.ReactNode
 }) => {
   return (
     <FormFieldControlContext.Provider value={field}>
@@ -135,7 +135,7 @@ interface FormItemProps extends React.HTMLAttributes<HTMLDivElement> {
 
 const FormItem = ({ children, className = '', ...props }: FormItemProps) => {
   return (
-    <div className={`space-y-2 ${className}`} {...props}>
+    <div className={`${className}`} {...props}>
       {children}
     </div>
   );
@@ -152,9 +152,9 @@ interface FormLabelProps extends React.LabelHTMLAttributes<HTMLLabelElement> {
 
 const FormLabel = ({ children, className = '', ...props }: FormLabelProps) => {
   const { id } = useFormField();
-  
+
   return (
-    <Label 
+    <Label
       htmlFor={id}
       className={`text-sm font-medium leading-none ${className}`}
       {...props}
@@ -191,7 +191,7 @@ const FormControl = ({ children }: FormControlProps) => {
 // ============================================
 // Displays validation errors
 
-interface FormMessageProps extends React.HTMLAttributes<HTMLParagraphElement> {}
+interface FormMessageProps extends React.HTMLAttributes<HTMLParagraphElement> { }
 
 const FormMessage = ({ className = '', ...props }: FormMessageProps) => {
   const { id, error } = useFormField();
@@ -201,7 +201,7 @@ const FormMessage = ({ className = '', ...props }: FormMessageProps) => {
   return (
     <p
       id={`${id}-error`}
-      className={`text-sm text-red-600 ${className}`}
+      className={`text-sm text-red-600  font-mediumz ${className}`}
       {...props}
     >
       {error}

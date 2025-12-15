@@ -1,3 +1,4 @@
+"use client"
 import clsx from "clsx";
 import React from "react";
 
@@ -9,7 +10,7 @@ interface LabelProps extends React.LabelHTMLAttributes<HTMLLabelElement>{
 export const Label = ({children , className , ...props}: LabelProps)=>{
     return(
         <label 
-        className = {clsx("text-sm font-medium text-gray-800 dark:text-gray-200" , className)}
+        className = {clsx("text-sm font-medium " , className)}
         {...props}
         >
             {children}

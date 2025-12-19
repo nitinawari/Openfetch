@@ -47,10 +47,12 @@ model Account {
 
 model Category {
   id           String         @id @default(uuid())
-  name         String
+  name         String         
   user         User           @relation(fields: [userId], references: [id])
   userId       String
   apiendpoints ApiEndPoints[]
+
+  @@unique([userId, name])
 }
 
 model ApiEndPoints {

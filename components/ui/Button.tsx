@@ -13,10 +13,10 @@ export const Button = ({
   className,
   ...props
 }: ButtonProps) => {
-  const baseClass = "text-center flex items-center justify-center font-medium rounded-md text-white hover:opacity-80 hover:cursor-pointer";
+  const baseClass = "text-center flex items-center justify-center font-medium rounded-md hover:opacity-80 hover:cursor-pointer";
 
   const variantClass = {
-    default: "bg-[#704CFF]",
+    default: "bg-[#704CFF] text-white",
     outline: "border border-gray-300"
 
   };

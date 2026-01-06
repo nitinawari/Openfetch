@@ -7,7 +7,7 @@ export async function DELETE(
     request: Request,
     { params }: { params: Promise<{ id: string }> }
 ) {
-    const {id : categoryId} = await params;
+    const { id: categoryId } = await params;
 
     const session = await auth();
     if (!session?.user?.id) {
@@ -45,9 +45,9 @@ export async function DELETE(
 
 export async function PATCH(
     request: Request,
-    { params }: { params: { id: string } }
+    { params }: { params: Promise<{ id: string }> }
 ) {
-    const categoryId = params.id;
+    const { id: categoryId } = await params;
 
     const session = await auth();
     if (!session?.user?.id) {
@@ -71,31 +71,35 @@ export async function PATCH(
         const response = await db.category.updateMany({
             where: {
                 id: categoryId,
-                userId:session.user.id
+                userId: session.user.id
             },
             data: {
                 name: category.data.categoryName
             }
         })
 
-        if(response.count === 0){
+        if (response.count === 0) {
             return Response.json(
-                {success:false , message:"category not found"},
-                {status: 404}
+                { success: false, message: "category not found" },
+                { status: 404 }
             )
         }
 
+        const updatedCategory = await db.category.findUnique({
+            where: { id: categoryId },
+        });
+
         return Response.json(
-            { success: true , data:response},
+            { success: true, data: updatedCategory },
             { status: 200 }
 
         )
     } catch (error) {
-        if(error instanceof Prisma.PrismaClientKnownRequestError){
-            if(error.code === "P2002"){
+        if (error instanceof Prisma.PrismaClientKnownRequestError) {
+            if (error.code === "P2002") {
                 return Response.json(
-                    {message:"category already exist" , success:false},
-                    {status:409}
+                    { message: "category already exist", success: false },
+                    { status: 409 }
                 )
 
             }

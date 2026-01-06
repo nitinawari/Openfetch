@@ -2,7 +2,7 @@
 import { FormError } from "@/components/form-error"
 import { Button } from "@/components/ui/Button"
 import { Input } from "@/components/ui/Input"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import { BsThreeDots } from "react-icons/bs";
 import { TbPencil } from "react-icons/tb";
 import { MdDelete } from "react-icons/md";
@@ -15,12 +15,18 @@ export const CategoryList = () => {
 
   const [category, setCategory] = useState<Category[]>([])
   const [isAdding, setIsAdding] = useState<boolean>(false)
+  const [isEditing, setIsEditing] = useState<boolean>(false)
   const [inputValue, setInputValue] = useState<string>("")
-  const [error, setError] = useState<string | null>(null);
+  const [editingValue, setEditingValue] = useState<string>("")
   const [isFetching, setIsFetching] = useState<boolean>(false)
   const [isCreating, setIsCreating] = useState<boolean>(false)
   const [activeMenuId, setActiveMenuId] = useState<string | null>(null)
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [error, setError] = useState<string | null>(null);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  //fetch categories
   useEffect(() => {
     fetchCategories()
   }, [])
@@ -35,7 +41,6 @@ export const CategoryList = () => {
       }
 
       setCategory(result.data)
-      // console.log(result.data)
 
     } catch (error) {
       setError(
@@ -46,6 +51,7 @@ export const CategoryList = () => {
     }
   }
 
+  //create categories
   const HandleSubmit = async () => {
     if (!inputValue.trim() || isCreating) return;
 
@@ -81,6 +87,7 @@ export const CategoryList = () => {
     return result.data;
   }
 
+  //delete categories
   const HandleDelete = async (id: string) => {
     try {
       await deleteCategory(id);
@@ -107,38 +114,107 @@ export const CategoryList = () => {
 
   }
 
+  //edit categories
+  const HandleEdit = async (id: string) => {
+    if (!editingValue.trim()) return
+
+    try {
+      const editedCategory = await EditCategory(id);
+      setCategory(prev =>
+      prev.map(category =>
+        category.id === id ? editedCategory : category
+      )
+    )
+      setIsEditing(false)
+      setEditingValue("")
+      setEditingId("")
+      setError("")
+    } catch (error) {
+      setError(error instanceof Error ? error.message : "something went wrong")
+    }
+  }
+
+  const EditCategory = async (id: string) => {
+    const res = await fetch(`/api/categories/${id}`, {
+      method: "PATCH",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({
+        categoryName: editingValue
+      })
+    })
+
+    const result = await res.json()
+    if (!res.ok) {
+      throw new Error("failed to update category")
+    }
+
+    return result.data
+  }
+
+  useEffect(() => {
+    if (!isEditing) return;
+
+    const input = inputRef.current;
+    if (!input) return;
+
+    input.focus();
+
+    const len = input.value.length;
+    input.setSelectionRange(len, len);
+  }, [isEditing])
+
   return (
     <div className="h-full w-80 p-4 bg-white border-r">
       <h1 className="font-bold text-center mb-4">Categories</h1>
       {isFetching && (
         <p className="text-sm text-gray-500">Loading categories…</p>
       )}
+
+      {/* list categories  and edit */}
       <div className="space-y-2">
         {category.map((cat) => (
           <div key={cat.id} className="relative">
-            <Button
-              className="w-full"
-              variant="outline"
-            >
-              <div className="flex items-center justify-between w-full px-2">
-                <span>{cat.name}</span>
-                <BsThreeDots
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    setActiveMenuId(
-                      activeMenuId === cat.id ? null : cat.id
-                    )
-                  }}
+            {editingId === cat.id && isEditing ?
+              (
+                <Input
+                  value={editingValue}
+                  ref={inputRef}
+                  onChange={(e) => setEditingValue(e.target.value)}
                 />
-              </div>
-            </Button>
+              )
+              :
+              (<Button
+                className="w-full"
+                variant="outline"
+              >
+                <div className="flex items-center justify-between w-full px-2">
+                  <span>{cat.name}</span>
+                  <BsThreeDots
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveMenuId(
+                        activeMenuId === cat.id ? null : cat.id
+                      )
+                    }}
+                  />
+                </div>
+              </Button>
+              )
+            }
 
             {/* deleting /editing dialbox */}
             {activeMenuId === cat.id &&
-              <div className="absolute left-100 top-2 mt-1 z-50 w-36 rounded-md border border-gray-200 bg-white shadow-lg py-1 space-y-1 ">
+              <div className="absolute left-75 top-2 mt-1 z-50 w-36 rounded-md border border-gray-200 bg-white shadow-lg py-1 space-y-1 ">
                 <Button
                   variant="outline"
                   className="flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => {
+                    setIsEditing(true)
+                    setEditingValue(cat.name)
+                    setEditingId(cat.id)
+                    setActiveMenuId(null)
+                    setIsAdding(false)
+                  }}
                 >
                   <TbPencil className="h-5 w-5" />
                   <p className="ml-1">
@@ -157,10 +233,31 @@ export const CategoryList = () => {
                 </Button>
               </div>
             }
+            
+            {/* editing diabox */}
+            {editingId === cat.id && isEditing &&
+              <div className="mt-4">
+                <div className="flex gap-2">
+                  <Button
+                    onClick={() => editingId && HandleEdit(editingId)}
+                  >
+                    {/* {isEditing ? "save" : "saving..."} */} SAVE
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setActiveMenuId("")
+                      setIsEditing(false)
+                      setEditingId("")
+                    }}>
+                    cancel
+                  </Button>
+                </div>
+              </div>
+            }
           </div>
         ))}
       </div>
-
+      {/* add new category */}
       <div className="mt-4">
         {isAdding ? (
           <div className="space-y-2">
@@ -202,6 +299,7 @@ export const CategoryList = () => {
             className="mt-2"
             onClick={() => {
               setIsAdding(true)
+              setIsEditing(false)
               setActiveMenuId(null);
             }
             }

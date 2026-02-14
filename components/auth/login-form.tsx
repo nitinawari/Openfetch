@@ -44,7 +44,7 @@ export const LoginForm =() => {
         })
     }    
     return (
-        <Card className="w-[400px] shadow-md" >
+        <Card className="w-[400px] bg-white shadow-md" >
             <CardHeader>
                 <Header label={'Welcome back'} />
             </CardHeader>

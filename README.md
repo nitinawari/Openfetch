@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+PROJECT: OpenFetch v1
 
-## Getting Started
+WHO IS IT FOR?
+Developers who want to fetch public APIs easily
 
-First, run the development server:
+CORE PROBLEM (1 sentence):
+Users cannot quickly discover, test, and save APIs
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+V1 GOAL (binary):
+A user can:
+1. Sign up
+2. Browse APIs
+3. Copy API endpoint
+4. Save API to favorites
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+OUT OF SCOPE (important):
+- No themes
+- No dark mode
+- No analytics
+- No social features
+- No perfect UI
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+DONE = deployed + usable + ugly
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+### STEP 6: How future projects should be planned (memorize this)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Every project must answer these before code:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+What is the smallest usable version?
 
-## Deploy on Vercel
+What features are forbidden?
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+What components exist?
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+What pages exist?
+
+What does “done” mean?
+
+If you skip this → you WILL stall again.

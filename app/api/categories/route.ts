@@ -72,7 +72,6 @@ export async function GET(request: Request) {
                 name: true
             }
         })
-
         return Response.json(
             { success: true, data: response },
             { status: 200 }

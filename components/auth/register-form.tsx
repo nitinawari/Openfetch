@@ -52,7 +52,7 @@ export const RegisterForm = () => {
     };
 
     return (
-        <Card className="w-[400px] ">
+        <Card className="w-[400px] bg-white">
             <CardHeader>
                 <Header label="Create an account" />
             </CardHeader>

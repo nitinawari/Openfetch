@@ -3,7 +3,7 @@ import clsx from "clsx";
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   children: React.ReactNode;
   variant?: "default" | "outline";
-  size?: "default";
+  size?: "default" | "sm";
 }
 
 export const Button = ({
@@ -21,8 +21,10 @@ export const Button = ({
 
   };
   const sizestyle = {
-    default: "w-full h-9  ",
+    default: "w-full h-9 ",
+    sm:"h-9 w-20 "
   };
+
 
   return (
     <button className={clsx(baseClass, variantClass[variant], sizestyle[size], className)} {...props}>

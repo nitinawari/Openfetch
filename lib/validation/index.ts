@@ -14,3 +14,12 @@ export const LoginSchema = z.object({
 export const CategorySchema = z.object({
   categoryName: z.string().trim().min(1).max(15),
 });
+
+const HTTPS_METHODS = ["GET", "POST", "PUT"] as const  
+
+export const ApiEndPointSchema = z.object({
+  name : z.string().trim().min(1).max(15),
+  url : z.httpUrl({message:"Invalid url"}),
+  method:z.enum(HTTPS_METHODS),
+  categoryId: z.uuid()
+});

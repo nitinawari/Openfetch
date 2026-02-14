@@ -11,7 +11,13 @@ interface Category {
   id: string,
   name: string
 }
-export const CategoryList = () => {
+
+interface CategoryProps {
+  ActiveCategoryId : string | null,
+  setActiveCategoryId : (id :string | null) =>void
+
+}
+export const CategoryList = ({ActiveCategoryId, setActiveCategoryId} : CategoryProps) => {
 
   const [category, setCategory] = useState<Category[]>([])
   const [isAdding, setIsAdding] = useState<boolean>(false)
@@ -25,10 +31,11 @@ export const CategoryList = () => {
   const [error, setError] = useState<string | null>(null);
 
   const inputRef = useRef<HTMLInputElement>(null);
-
+  
   //fetch categories
   useEffect(() => {
     fetchCategories()
+
   }, [])
   const fetchCategories = async () => {
     setIsFetching(true)
@@ -164,7 +171,7 @@ export const CategoryList = () => {
   }, [isEditing])
 
   return (
-    <div className="h-full w-80 p-4 bg-white border-r">
+    <div className="h-full w-72 p-4 bg-white border-r">
       <h1 className="font-bold text-center mb-4">Categories</h1>
       {isFetching && (
         <p className="text-sm text-gray-500">Loading categories…</p>
@@ -184,8 +191,17 @@ export const CategoryList = () => {
               )
               :
               (<Button
-                className="w-full"
+                className={ActiveCategoryId === cat.id
+              ? "bg-black text-white"
+              : "bg-white"}
                 variant="outline"
+                onClick={()=>{
+                  if (ActiveCategoryId === cat.id) {
+                    setActiveCategoryId(null)
+                  } else {
+                    setActiveCategoryId(cat.id)
+                  }
+                }}
               >
                 <div className="flex items-center justify-between w-full px-2">
                   <span>{cat.name}</span>
@@ -197,6 +213,7 @@ export const CategoryList = () => {
                       )
                     }}
                   />
+
                 </div>
               </Button>
               )
@@ -204,7 +221,7 @@ export const CategoryList = () => {
 
             {/* deleting /editing dialbox */}
             {activeMenuId === cat.id &&
-              <div className="absolute left-75 top-2 mt-1 z-50 w-36 rounded-md border border-gray-200 bg-white shadow-lg py-1 space-y-1 ">
+              <div className="absolute left-75 top-2 mt-1 z-10 w-36 rounded-md border border-gray-200 bg-white shadow-lg py-1 space-y-1 ">
                 <Button
                   variant="outline"
                   className="flex w-full items-center gap-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100"
@@ -252,7 +269,7 @@ export const CategoryList = () => {
                     cancel
                   </Button>
                 </div>
-              </div>
+              </div> 
             }
           </div>
         ))}

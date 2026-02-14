@@ -1,36 +1,28 @@
-import { auth , signOut } from "@/auth"
-import { Button } from "@/components/ui/Button";
-import { redirect } from "next/navigation";
-import { CategoryList } from "@/app/(protected)/dashboard/category-list";
+"use client"
+import { CategoryList } from "@/app/(protected)/dashboard/categoryList";
+import { Navbar } from "@/components/Navbar";
+import { ApiCardsPage } from "@/app/(protected)/dashboard/apiCardGrid";
+import { useState } from "react";
 
 
- const DashbaordPage =  async () => {
-
-    const session = await auth()
-
-    if(!session) {
-        redirect("/login")
-    }
-    return(
-        <div className="flex h-full space-x-3"> 
-            <CategoryList />
+export const DashbaordPage = () => {
+    const [ActiveCategoryId, setActiveCategoryId] = useState<string | null>(null);
+    return (
+        <div className="h-full">
             <div>
-                 {JSON.stringify(session)};
-            
-                <Button
-                className="p-3 hover:cursor-pointer  border m-3"
-                onClick={async ()=>{
-                    "use server"
-                    await signOut({ redirectTo: "/login" })
-                }
-                }
-                >
-                Signout 
-            </Button>
+            <Navbar />
             </div>
-           
+            <div className="flex h-full space-x-3">
+                <CategoryList
+                ActiveCategoryId={ActiveCategoryId}
+                setActiveCategoryId={setActiveCategoryId}
+                />
+                <ApiCardsPage
+                ActiveCategoryId={ActiveCategoryId}
+                />
+            </div>
         </div>
     )
-}   
+}
 
- export default DashbaordPage;
+export default DashbaordPage;

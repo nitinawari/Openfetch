@@ -84,7 +84,6 @@ export async function GET(request : Request){
         category: api.category.name
         }))
 
-        console.log("respone======>" , formattedResponce)
         return Response.json(
             { success: true, data: formattedResponce},
             { status: 200 }

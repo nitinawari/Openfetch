@@ -57,9 +57,6 @@ export const ApiCardsPage = ({ActiveCategoryId}:ApiCardProps) => {
     ? apiEndPoints.filter((api) => api.category === ActiveCategory?.name)
     :apiEndPoints;
 
-    console.log("ActiveCategoryId========>" , ActiveCategoryId)
-    console.log("filterd api========>" , filteredApis)
-
     //fetch categories
     useEffect(() => {
         fetchCategories()
@@ -74,7 +71,6 @@ export const ApiCardsPage = ({ActiveCategoryId}:ApiCardProps) => {
             if (!res.ok) {
                 throw new Error(result.message || "Failed to load api");
             }
-            console.log(result.data)
             setApiEndPoints(result.data)
         } catch (error) {
             setError(
